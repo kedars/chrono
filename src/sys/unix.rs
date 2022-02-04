@@ -97,7 +97,9 @@ pub fn time_to_local_tm(sec: i64, tm: &mut Tm) {
                 -timezone
             }
         };
-        #[cfg(not(any(target_os = "solaris", target_os = "illumos")))]
+        #[cfg(any(target_os = "espidf"))]
+        let gmtoff = 0;
+        #[cfg(not(any(target_os = "solaris", target_os = "illumos", target_os = "espidf")))]
         let gmtoff = out.tm_gmtoff;
         tm_to_rust_tm(&out, gmtoff as i32, tm);
     }
